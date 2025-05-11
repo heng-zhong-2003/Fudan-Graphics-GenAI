@@ -22,3 +22,6 @@ Generative AI project of the Fudan Computer Graphics course.
 
 开发过程记录：
 1. 打开浏览 CAD 的软件：https://www.freecad.org/
+
+
+依赖包：mypy （标注好类型）
