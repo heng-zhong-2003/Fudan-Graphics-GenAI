@@ -13,7 +13,10 @@ Generative AI project of the Fudan Computer Graphics course.
 - 在预训练模型上开展工作，准确度高（展示对一些关键词识别）
 - 专家系统（对抗式训练，AI+专家系统）
 - 敏捷开发、全过程符合现代软件设计规范、扩展好
+- 可使用不同 LLM，可作为通用框架
 - 把原始模型扩展到了2d图形上
+- 在同胞基础上扩展，爱国
+  
 
 开发过程记录：
 1. 打开浏览 CAD 的软件：https://www.freecad.org/
