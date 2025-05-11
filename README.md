@@ -16,6 +16,7 @@ Generative AI project of the Fudan Computer Graphics course.
 - 可使用不同 LLM，可作为通用框架
 - 把原始模型扩展到了2d图形上
 - 在同胞基础上扩展，爱国
+- 提供多个备选方案，更好处理任务
   
 
 开发过程记录：
