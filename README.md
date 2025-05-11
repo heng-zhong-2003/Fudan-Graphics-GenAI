@@ -17,6 +17,7 @@ Generative AI project of the Fudan Computer Graphics course.
 - 把原始模型扩展到了2d图形上
 - 在同胞基础上扩展，爱国
 - 提供多个备选方案，更好处理任务
+- 3D 转 2D，确保实现可闭合
   
 
 开发过程记录：
