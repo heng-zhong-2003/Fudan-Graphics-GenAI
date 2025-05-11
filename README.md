@@ -25,3 +25,7 @@ Generative AI project of the Fudan Computer Graphics course.
 
 
 依赖包：mypy （标注好类型）
+配置：
+  - FreeCAD：直接下载， 没必要配转换器，配不对的，用下面这个转 DXF 再打开更好
+  - ODA File Converter 25.12.0：下载完，直接配置一个input、output文件夹，整个转换，CWG->DXF
+  
