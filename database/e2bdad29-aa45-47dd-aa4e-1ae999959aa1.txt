@@ -1,0 +1,1 @@
+Create a 3D model of a desk chair. It should have a seat, a backrest, and wheels at the base.

@@ -1,0 +1,1 @@
+Compare the two office chairs. One should have armrests, and the other should not. Which one looks more comfortable?

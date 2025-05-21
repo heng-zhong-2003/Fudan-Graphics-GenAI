@@ -1,0 +1,1 @@
+Compare a set of four dining chairs. Each chair should have a slightly different backrest design. Arrange them around a circular dining table. Show a top-down view to highlight the differences in backrest shapes.

@@ -1,0 +1,1 @@
+Create two models for comparison: a sofa with three cushions and armrests on both sides, and an armchair with a single cushion and armrests. Place them side by side to highlight the differences in size and seating capacity.
