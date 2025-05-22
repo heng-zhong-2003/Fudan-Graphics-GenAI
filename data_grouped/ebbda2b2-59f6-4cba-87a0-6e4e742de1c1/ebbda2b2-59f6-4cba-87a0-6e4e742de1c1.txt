@@ -1,0 +1,1 @@
+Compare an armchair and a sofa. The armchair should be 36 inches wide, 36 inches deep, and 36 inches high. The sofa should be 84 inches wide, 36 inches deep, and 36 inches high.

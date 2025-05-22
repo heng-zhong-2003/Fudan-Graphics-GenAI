@@ -1,0 +1,1 @@
+Create two 3D models of dining chairs. One should have a straight backrest, and the other should have a slightly curved backrest. Both chairs should have four legs and a flat seat. Make sure the designs are simple and functional.

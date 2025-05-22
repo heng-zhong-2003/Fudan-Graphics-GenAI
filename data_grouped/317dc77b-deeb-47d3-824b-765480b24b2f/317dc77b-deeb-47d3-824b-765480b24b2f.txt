@@ -1,0 +1,1 @@
+Design a chair. It should have four legs, a flat seat, and a straight backrest. Place it in a simple, undecorated setting.

@@ -1,0 +1,1 @@
+Create a 3D model comparing a sofa and an armchair. The sofa should have three seats and armrests on both sides, while the armchair should have a single seat with armrests. Highlight the differences in their sizes and seating capacities.

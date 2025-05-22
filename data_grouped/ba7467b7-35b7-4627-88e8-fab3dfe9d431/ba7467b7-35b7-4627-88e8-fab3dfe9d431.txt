@@ -1,0 +1,1 @@
+Compare an armchair and a recliner in a 3D model. The armchair should have a fixed back and armrests, while the recliner should have an adjustable backrest and a footrest.

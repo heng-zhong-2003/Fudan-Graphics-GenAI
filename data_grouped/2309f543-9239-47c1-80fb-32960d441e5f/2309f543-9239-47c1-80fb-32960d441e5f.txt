@@ -1,0 +1,1 @@
+Design a dining chair with a tall backrest and no armrests. The seat should be square and the legs should be straight. Make sure the backrest is slightly curved for comfort.

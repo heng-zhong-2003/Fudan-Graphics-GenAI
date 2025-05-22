@@ -1,0 +1,1 @@
+Model a basic reading chair with a seat height of 18 inches and a backrest height of 42 inches from the ground.

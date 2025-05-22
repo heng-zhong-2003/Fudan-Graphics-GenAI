@@ -1,0 +1,1 @@
+Let's create a dining chair. The seat should be a square, with each side measuring 18 inches. The backrest is a simple rectangular shape, extending 20 inches above the seat. The chair has four straight legs, each 18 inches tall. The legs are attached at the corners of the seat.
