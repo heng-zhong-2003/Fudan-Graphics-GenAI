@@ -1,0 +1,1 @@
+Design a 3D model of an armchair. Start with a wide, comfortable seat. Add a backrest that rises up from the seat. Include two armrests on either side. Finally, add four legs to support the chair.

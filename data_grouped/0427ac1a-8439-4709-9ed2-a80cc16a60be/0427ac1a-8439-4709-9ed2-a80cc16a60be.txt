@@ -1,0 +1,1 @@
+Create a 3D model of an armchair. Ensure it has a backrest, a seat, and armrests on both sides.

@@ -1,0 +1,1 @@
+Compare two 3D models of armchairs. One should have a high backrest, while the other should have a low backrest. Both should have armrests on either side.

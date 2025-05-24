@@ -1,0 +1,1 @@
+Compare two office chairs. One should have a high backrest with armrests. The other should have a low backrest with no armrests. Describe which chair might be more comfortable for long periods of use.

@@ -1,0 +1,1 @@
+Design a dining chair with a straight backrest, a flat seat, and four legs. Ensure the chair is comfortable for sitting at a dining table. Add a crossbar between the legs for extra support.

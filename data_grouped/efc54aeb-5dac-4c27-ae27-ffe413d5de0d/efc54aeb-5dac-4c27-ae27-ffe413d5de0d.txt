@@ -1,0 +1,1 @@
+Design a simple chair with four legs and a straight backrest.

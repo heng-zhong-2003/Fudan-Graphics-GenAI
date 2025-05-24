@@ -1,0 +1,1 @@
+Create a simple armchair. The chair should have a wide, cushioned seat and backrest. Include armrests on both sides.

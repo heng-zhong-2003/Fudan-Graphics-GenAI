@@ -1,0 +1,1 @@
+Create a 3D model of an office chair. It should have a high backrest, armrests, and a swivel base with wheels. Ensure the seat and backrest are cushioned.

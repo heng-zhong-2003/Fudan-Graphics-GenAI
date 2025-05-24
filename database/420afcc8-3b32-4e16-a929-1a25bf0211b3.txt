@@ -1,0 +1,1 @@
+Create a 3D model comparing a chair and a stool. The chair should have a backrest and four legs, while the stool should have three legs and no backrest. Place both side by side.

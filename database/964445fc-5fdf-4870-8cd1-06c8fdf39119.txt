@@ -1,0 +1,1 @@
+Create an armchair. It should have a comfortable seat, a backrest, and two armrests.

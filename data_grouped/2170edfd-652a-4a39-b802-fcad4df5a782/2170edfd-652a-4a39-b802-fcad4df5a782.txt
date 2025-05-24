@@ -1,0 +1,1 @@
+Please create a 3D model of a chair. It should have four legs, a seat, and a backrest.

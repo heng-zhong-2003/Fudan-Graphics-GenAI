@@ -1,0 +1,1 @@
+Create a 3D model of an office chair. The chair has a rectangular backrest and a square seat, both supported by a cylindrical stem. The base has five legs with wheels attached.
