@@ -28,14 +28,14 @@
 ## 代码结构：
 1. 整体
 ~/graph/  
-├── models/BlenderLLM/                    # 千问7B模型  
+├── models/BlenderLLM/                    # 千问7B模型，下有modeling.py
 ├── BlenderModel/blender-4.4.3-linux-x64/ # Blender软件  
 ├── BlenderLLM-main/                      # BlenderLLM代码  
 └── Fudan-Graphics-GenAI/                 # 你的微调代码  
     ├── data_grouped/                     # 训练数据  
     ├── train_chair_model.py  
     ├── config/default.json  
-    └── 其他代码文件  
+    └── 其他代码文件,包括测试separate_model_evaluation.py
 2. Fudan-Graphics-GenAI/下
 微调训练的代码：fine_tune_blender_llm.py  
 评估指标设计：evaluation_metrics.py
@@ -140,6 +140,29 @@ CUDA错误 - 概率张量包含inf/nan值；
 - 重写为自然语言描述：train_natural_language.py
 11. 还是LoRA
 - train_lora_blender.py, 且解决gpu分配问题
+12. train_lora_blender生成代码中：
+- 将所有循环中的 i 改为 idx
+- 在 f-string 中正确使用 {{idx+1}} 来生成动态名称
+13. 图像比对还没做
+~/graph/  
+├── models/BlenderLLM/                    # 千问7B模型  
+├── BlenderModel/blender-4.4.3-linux-x64/ # Blender软件  
+├── BlenderLLM-main/                      # BlenderLLM原始代码  
+└── Fudan-Graphics-GenAI/                 # 你的微调项目 📍  
+    ├── data_grouped/                     # 训练数据  
+    ├── train_chair_model.py             # 微调训练脚本  
+    ├── separate_model_evaluation.py     # 模型评估脚本 🆕  
+    ├── config/default.json  
+    ├── utils/                           # 新建工具目录 🆕  
+    │   ├── __init__.py                 # 包含Blender渲染和图像评估相关工具  🆕 
+    │   ├── blender_evaluator.py        # Blender渲染评估器 🆕  
+    │   └── image_evaluation.py         # 图像质量评估 🆕 图像质量评估工具。使用OpenAI GPT-4V对渲染图像进行质量评估   
+    ├── output/                          # 输出目录  
+    │   ├── lora_blender_enhanced/       # LoRA模型保存  
+    │   └── evaluation_renders/          # 渲染图像保存 🆕  
+    └── scripts/                         # 辅助脚本 🆕  
+        ├── __init__.py                 # 包含Blender运行和文件处理相关脚本  🆕 
+        └── blender_runner.py            # Blender运行器。基于BlenderLLM项目修改，适配椅子设计评估需求  🆕 
 
 
 总结，两份代码：
@@ -170,12 +193,17 @@ python fix_json_save.py
 ![alt text](image-9.png)
 ![alt text](image-10.png)
 
-进行评价：model_comparison_evaluation.py
+进行评价：model_comparison_evaluation.py（不需要
 改为 分离式评估 ：separate_model_evaluation.py  避免内存问题，不好同时启两个模型
+python separate_model_evaluation.py
 
 
 
-以下只是示例，改配置可实现控制训练参数
+
+
+
+以下只是示例，改配置可实现控制训练参数.
+下面没必要看
 
 
 

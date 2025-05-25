@@ -22,5 +22,18 @@
         "temperature": 0.7,  
         "top_p": 0.9,  
         "do_sample": true  
+    },
+    "model_config": {  
+        "base_model_path": "../models/BlenderLLM",  
+        "lora_model_path": "./output/lora_blender_enhanced"  
+    },  
+    "blender_config": {  
+        "executable_path": "../BlenderModel/blender-4.4.3-linux-x64/blender",  
+        "render_output": "./output/evaluation_renders"  
+    },  
+    "evaluation_config": {  
+        "openai_api_key": "need_add",  
+        "render_resolution": [512, 512],  
+        "key_prompts_only": true  
     }  
 }  

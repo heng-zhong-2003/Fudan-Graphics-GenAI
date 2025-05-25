@@ -59,7 +59,7 @@ def load_chair_data_simple():
     data_dir = "./data_grouped"  
     chair_data = []  
     
-    for folder_name in os.listdir(data_dir)[:10]:  # 减少到10个样本  
+    for folder_name in os.listdir(data_dir)[:50]:  # 保持50个样本  
         folder_path = os.path.join(data_dir, folder_name)  
         if not os.path.isdir(folder_path):  
             continue  
@@ -89,12 +89,38 @@ def load_chair_data_simple():
     return chair_data  
 
 def generate_simple_blender_code(description):  
-    """生成简化的Blender代码"""  
+    """生成更详细的Blender代码 - 修复变量定义问题"""  
     
-    # 检测关键特征  
-    has_armrest = 'armrest' in description.lower()  
-    is_office_chair = 'office' in description.lower()  
-    is_minimalist = 'minimalist' in description.lower()  
+    # 转换为小写便于检测  
+    desc_lower = description.lower()  
+    
+    # 检测风格特征  
+    is_minimalist = any(word in desc_lower for word in ['minimalist', 'minimal', 'simple'])  
+    is_modern = any(word in desc_lower for word in ['modern', 'contemporary', 'sleek'])  
+    is_vintage = any(word in desc_lower for word in ['vintage', 'retro', 'classic', 'traditional'])  
+    is_industrial = any(word in desc_lower for word in ['industrial', 'metal', 'steel'])  
+    is_scandinavian = any(word in desc_lower for word in ['scandinavian', 'nordic', 'wood', 'wooden'])  
+    is_ergonomic = any(word in desc_lower for word in ['ergonomic', 'comfortable', 'support'])  
+    
+    # 检测功能特征  
+    has_armrest = any(word in desc_lower for word in ['armrest', 'arm rest', 'arms'])  
+    has_wheels = any(word in desc_lower for word in ['wheel', 'caster', 'rolling', 'swivel'])  
+    is_office_chair = any(word in desc_lower for word in ['office', 'desk', 'work'])  
+    is_dining_chair = any(word in desc_lower for word in ['dining', 'kitchen', 'table'])  
+    is_gaming_chair = any(word in desc_lower for word in ['gaming', 'game', 'racing'])  
+    is_recliner = any(word in desc_lower for word in ['recliner', 'recline', 'lounge'])  
+    is_bar_stool = any(word in desc_lower for word in ['bar', 'stool', 'high', 'counter'])  
+    is_folding = any(word in desc_lower for word in ['folding', 'fold', 'portable'])  
+    
+    # 检测材质特征  
+    is_leather = any(word in desc_lower for word in ['leather', 'hide'])  
+    is_fabric = any(word in desc_lower for word in ['fabric', 'upholster', 'cushion', 'soft'])  
+    is_plastic = any(word in desc_lower for word in ['plastic', 'acrylic', 'resin'])  
+    
+    # 检测尺寸特征  
+    is_tall = any(word in desc_lower for word in ['tall', 'high back', 'high-back'])  
+    is_wide = any(word in desc_lower for word in ['wide', 'broad', 'spacious'])  
+    is_compact = any(word in desc_lower for word in ['compact', 'small', 'space-saving'])  
     
     code = '''import bpy  
 
@@ -103,45 +129,430 @@ bpy.ops.object.select_all(action='DESELECT')
 bpy.ops.object.select_by_type(type='MESH')  
 bpy.ops.object.delete()  
 
-# Create seat  
-bpy.ops.mesh.primitive_cube_add(size=2, location=(0, 0, 0.5))  
+'''  
+    
+    # 根据椅子类型调整基本尺寸  
+    if is_bar_stool:  
+        seat_height = 1.2  
+        seat_scale = (0.35, 0.35, 0.03)  
+        backrest_height = 1.5  
+        leg_height = 1.0  
+    elif is_compact:  
+        seat_height = 0.4  
+        seat_scale = (0.35, 0.3, 0.04)  
+        backrest_height = 0.7  
+        leg_height = 0.35  
+    elif is_wide:  
+        seat_height = 0.5  
+        seat_scale = (0.55, 0.5, 0.05)  
+        backrest_height = 0.9  
+        leg_height = 0.45  
+    else:  
+        seat_height = 0.5  
+        seat_scale = (0.45, 0.4, 0.05)  
+        backrest_height = 0.85  
+        leg_height = 0.45  
+    
+    # 创建座椅  
+    code += f'''# Create seat  
+bpy.ops.mesh.primitive_cube_add(size=2, location=(0, 0, {seat_height}))  
 seat = bpy.context.active_object  
 seat.name = "Seat"  
 '''  
     
+    # 根据风格调整座椅形状  
     if is_minimalist:  
-        code += 'seat.scale = (0.4, 0.35, 0.02)\n'  
+        code += f'seat.scale = ({seat_scale[0]-0.05}, {seat_scale[1]-0.05}, {seat_scale[2]-0.01})\n'  
+    elif is_gaming_chair or is_ergonomic:  
+        code += f'seat.scale = ({seat_scale[0]+0.1}, {seat_scale[1]+0.05}, {seat_scale[2]+0.02})\n'  
+        # 添加座椅曲面  
+        code += '''  
+# Add seat curve for ergonomic design  
+bpy.ops.object.modifier_add(type='BEVEL')  
+seat.modifiers["Bevel"].width = 0.02  
+'''  
     else:  
-        code += 'seat.scale = (0.45, 0.4, 0.05)\n'  
+        code += f'seat.scale = {seat_scale}\n'  
     
-    # 椅背  
-    code += '''  
+    # 添加座椅材质效果  
+    if is_leather:  
+        code += '''  
+# Add leather-like material  
+mat_seat = bpy.data.materials.new(name="Leather_Seat")  
+mat_seat.use_nodes = True  
+mat_seat.node_tree.nodes["Principled BSDF"].inputs[0].default_value = (0.3, 0.2, 0.1, 1.0)  
+mat_seat.node_tree.nodes["Principled BSDF"].inputs[9].default_value = 0.8  
+seat.data.materials.append(mat_seat)  
+'''  
+    elif is_fabric:  
+        code += '''  
+# Add fabric-like material  
+mat_seat = bpy.data.materials.new(name="Fabric_Seat")  
+mat_seat.use_nodes = True  
+mat_seat.node_tree.nodes["Principled BSDF"].inputs[0].default_value = (0.4, 0.4, 0.6, 1.0)  
+mat_seat.node_tree.nodes["Principled BSDF"].inputs[9].default_value = 0.9  
+seat.data.materials.append(mat_seat)  
+'''  
+    
+    # 创建椅背  
+    if not is_bar_stool or (is_bar_stool and 'back' in desc_lower):  
+        backrest_location = f"(0, -0.35, {backrest_height})"  
+        if is_tall:  
+            backrest_scale = "(0.4, 0.04, 0.45)"  
+        elif is_minimalist:  
+            backrest_scale = "(0.35, 0.03, 0.3)"  
+        elif is_gaming_chair:  
+            backrest_scale = "(0.45, 0.06, 0.5)"  
+        else:  
+            backrest_scale = "(0.4, 0.04, 0.35)"  
+            
+        code += f'''  
 # Create backrest  
-bpy.ops.mesh.primitive_cube_add(size=2, location=(0, -0.35, 0.85))  
+bpy.ops.mesh.primitive_cube_add(size=2, location={backrest_location})  
 backrest = bpy.context.active_object  
 backrest.name = "Backrest"  
-backrest.scale = (0.4, 0.04, 0.35)  
+backrest.scale = {backrest_scale}  
+'''  
+        
+        # 为人体工学椅子添加腰部支撑  
+        if is_ergonomic or is_gaming_chair:  
+            code += f'''  
+# Add lumbar support  
+bpy.ops.mesh.primitive_cube_add(size=2, location=(0, -0.32, {backrest_height-0.1}))  
+lumbar = bpy.context.active_object  
+lumbar.name = "Lumbar_Support"  
+lumbar.scale = (0.25, 0.03, 0.08)  
 '''  
     
-    # 椅腿  
-    if is_office_chair:  
-        code += '''  
-# Office chair base  
-bpy.ops.mesh.primitive_cylinder_add(radius=0.3, depth=0.05, location=(0, 0, 0.05))  
+    # 创建扶手  
+    if has_armrest:  
+        if is_gaming_chair or is_office_chair:  
+            code += f'''  
+# Create adjustable armrests  
+armrest_positions = [(-0.4, 0, {seat_height+0.2}), (0.4, 0, {seat_height+0.2})]  
+for idx, pos in enumerate(armrest_positions):  
+    # Armrest support  
+    bpy.ops.mesh.primitive_cylinder_add(radius=0.02, depth=0.3, location=(pos[0], pos[1], pos[2]-0.1))  
+    arm_support = bpy.context.active_object  
+    arm_support.name = f"Armrest_Support_{{idx+1}}"  
+    
+    # Armrest pad  
+    bpy.ops.mesh.primitive_cube_add(size=2, location=pos)  
+    armrest = bpy.context.active_object  
+    armrest.name = f"Armrest_{{idx+1}}"  
+    armrest.scale = (0.15, 0.25, 0.02)  
+'''  
+        else:  
+            code += f'''  
+# Create simple armrests  
+armrest_positions = [(-0.35, 0, {seat_height+0.15}), (0.35, 0, {seat_height+0.15})]  
+for idx, pos in enumerate(armrest_positions):  
+    bpy.ops.mesh.primitive_cube_add(size=2, location=pos)  
+    armrest = bpy.context.active_object  
+    armrest.name = f"Armrest_{{idx+1}}"  
+    armrest.scale = (0.04, 0.3, 0.15)  
+'''  
+    
+    # 创建支撑结构（腿部或底座）  
+    if has_wheels or is_office_chair or is_gaming_chair:  
+        code += f'''  
+# Create office chair base with wheels  
+bpy.ops.mesh.primitive_cylinder_add(radius=0.4, depth=0.05, location=(0, 0, 0.05))  
 base = bpy.context.active_object  
 base.name = "Base"  
+
+# Central column  
+bpy.ops.mesh.primitive_cylinder_add(radius=0.04, depth={seat_height-0.1}, location=(0, 0, {(seat_height-0.1)/2 + 0.05}))  
+column = bpy.context.active_object  
+column.name = "Central_Column"  
+
+# Add wheels  
+wheel_positions = [(0.35, 0, 0.05), (-0.35, 0, 0.05), (0, 0.35, 0.05), (0, -0.35, 0.05), (0.25, 0.25, 0.05)]  
+for idx, pos in enumerate(wheel_positions):  
+    bpy.ops.mesh.primitive_cylinder_add(radius=0.03, depth=0.02, location=pos)  
+    wheel = bpy.context.active_object  
+    wheel.name = f"Wheel_{{idx+1}}"  
+    wheel.rotation_euler = (1.5708, 0, 0)  
+'''  
+    elif is_bar_stool:  
+        code += f'''  
+# Create bar stool legs with footrest  
+leg_positions = [(-0.25, -0.25, {leg_height/2}), (0.25, -0.25, {leg_height/2}), (-0.25, 0.25, {leg_height/2}), (0.25, 0.25, {leg_height/2})]  
+for idx, pos in enumerate(leg_positions):  
+    bpy.ops.mesh.primitive_cylinder_add(radius=0.02, depth={leg_height}, location=pos)  
+    leg = bpy.context.active_object  
+    leg.name = f"Leg_{{idx+1}}"  
+
+# Add footrest  
+bpy.ops.mesh.primitive_torus_add(major_radius=0.25, minor_radius=0.02, location=(0, 0, {leg_height*0.4}))  
+footrest = bpy.context.active_object  
+footrest.name = "Footrest"  
+'''  
+    elif is_folding:  
+        code += f'''  
+# Create folding chair legs  
+leg_positions = [(-0.3, -0.3, {leg_height/2}), (0.3, -0.3, {leg_height/2}), (-0.3, 0.3, {leg_height/2}), (0.3, 0.3, {leg_height/2})]  
+for idx, pos in enumerate(leg_positions):  
+    bpy.ops.mesh.primitive_cylinder_add(radius=0.025, depth={leg_height}, location=pos)  
+    leg = bpy.context.active_object  
+    leg.name = f"Leg_{{idx+1}}"  
+    leg.rotation_euler = (0, 0.1, 0)  
+    
+# Add cross braces for stability  
+bpy.ops.mesh.primitive_cylinder_add(radius=0.015, depth=0.6, location=(0, 0, {leg_height*0.3}))  
+brace1 = bpy.context.active_object  
+brace1.name = "Cross_Brace_1"  
+brace1.rotation_euler = (0, 0, 1.5708)  
+
+bpy.ops.mesh.primitive_cylinder_add(radius=0.015, depth=0.6, location=(0, 0, {leg_height*0.3}))  
+brace2 = bpy.context.active_object  
+brace2.name = "Cross_Brace_2"  
+brace2.rotation_euler = (1.5708, 0, 0)  
 '''  
     else:  
-        code += '''  
-# Four legs  
-leg_positions = [(-0.35, -0.3, 0.25), (0.35, -0.3, 0.25), (-0.35, 0.3, 0.25), (0.35, 0.3, 0.25)]  
-for i, pos in enumerate(leg_positions):  
-    bpy.ops.mesh.primitive_cylinder_add(radius=0.03, depth=0.5, location=pos)  
+        # 标准四腿椅子  
+        if is_industrial:  
+            code += f'''  
+# Create industrial style metal legs  
+leg_positions = [(-0.35, -0.3, {leg_height/2}), (0.35, -0.3, {leg_height/2}), (-0.35, 0.3, {leg_height/2}), (0.35, 0.3, {leg_height/2})]  
+for idx, pos in enumerate(leg_positions):  
+    bpy.ops.mesh.primitive_cube_add(size=2, location=pos)  
     leg = bpy.context.active_object  
-    leg.name = f"Leg_{i+1}"  
+    leg.name = f"Leg_{{idx+1}}"  
+    leg.scale = (0.02, 0.02, {leg_height/2})  
+'''  
+        elif is_scandinavian:  
+            code += f'''  
+# Create wooden style legs with slight taper  
+leg_positions = [(-0.35, -0.3, {leg_height/2}), (0.35, -0.3, {leg_height/2}), (-0.35, 0.3, {leg_height/2}), (0.35, 0.3, {leg_height/2})]  
+for idx, pos in enumerate(leg_positions):  
+    bpy.ops.mesh.primitive_cylinder_add(radius=0.035, depth={leg_height}, location=pos)  
+    leg = bpy.context.active_object  
+    leg.name = f"Leg_{{idx+1}}"  
+    bpy.ops.object.modifier_add(type='BEVEL')  
+    leg.modifiers["Bevel"].width = 0.005  
+'''  
+        else:  
+            code += f'''  
+# Create standard four legs  
+leg_positions = [(-0.35, -0.3, {leg_height/2}), (0.35, -0.3, {leg_height/2}), (-0.35, 0.3, {leg_height/2}), (0.35, 0.3, {leg_height/2})]  
+for idx, pos in enumerate(leg_positions):  
+    bpy.ops.mesh.primitive_cylinder_add(radius=0.03, depth={leg_height}, location=pos)  
+    leg = bpy.context.active_object  
+    leg.name = f"Leg_{{idx+1}}"  
 '''  
     
-    return code  
+    # 添加装饰性元素  
+    if is_vintage or 'carved' in desc_lower:  
+        code += '''  
+# Add decorative elements for vintage style  
+bpy.ops.mesh.primitive_torus_add(major_radius=0.08, minor_radius=0.01, location=(0, -0.35, 1.1))  
+decoration = bpy.context.active_object  
+decoration.name = "Backrest_Decoration"  
+
+# Add carved details on backrest  
+bpy.ops.mesh.primitive_cube_add(size=2, location=(0, -0.33, 0.9))  
+carving = bpy.context.active_object  
+carving.name = "Carved_Detail"  
+carving.scale = (0.25, 0.02, 0.1)  
+'''  
+    
+    # 为可调节椅子添加调节机构  
+    if 'adjustable' in desc_lower or 'height adjustable' in desc_lower:  
+        code += f'''  
+# Add height adjustment mechanism  
+bpy.ops.mesh.primitive_cylinder_add(radius=0.05, depth=0.1, location=(0, 0, {seat_height-0.15}))  
+adjustment = bpy.context.active_object  
+adjustment.name = "Height_Adjustment"  
+
+# Add adjustment lever  
+bpy.ops.mesh.primitive_cylinder_add(radius=0.01, depth=0.08, location=(0.2, 0, {seat_height-0.1}))  
+lever = bpy.context.active_object  
+lever.name = "Adjustment_Lever"  
+lever.rotation_euler = (0, 1.5708, 0)  
+'''  
+    
+    # 为躺椅添加可调节靠背  
+    if is_recliner:  
+        code += '''  
+# Add reclining mechanism  
+bpy.ops.mesh.primitive_cylinder_add(radius=0.02, depth=0.05, location=(-0.4, -0.2, 0.6))  
+hinge = bpy.context.active_object  
+hinge.name = "Reclining_Hinge"  
+hinge.rotation_euler = (0, 1.5708, 0)  
+
+# Add footrest for recliner  
+bpy.ops.mesh.primitive_cube_add(size=2, location=(0, 0.5, 0.3))  
+footrest = bpy.context.active_object  
+footrest.name = "Footrest"  
+footrest.scale = (0.35, 0.25, 0.02)  
+'''  
+    
+    # 添加头枕（针对高背椅和游戏椅）  
+    if is_gaming_chair or (is_tall and is_ergonomic):  
+        code += f'''  
+# Add headrest  
+bpy.ops.mesh.primitive_cube_add(size=2, location=(0, -0.3, {backrest_height+0.3}))  
+headrest = bpy.context.active_object  
+headrest.name = "Headrest"  
+headrest.scale = (0.25, 0.08, 0.12)  
+
+# Headrest support  
+bpy.ops.mesh.primitive_cylinder_add(radius=0.015, depth=0.15, location=(0, -0.35, {backrest_height+0.15}))  
+headrest_support = bpy.context.active_object  
+headrest_support.name = "Headrest_Support"  
+'''  
+    
+    # 添加靠垫（针对舒适性椅子）  
+    if is_fabric or 'cushion' in desc_lower or 'padded' in desc_lower:  
+        code += f'''  
+# Add seat cushion  
+bpy.ops.mesh.primitive_cube_add(size=2, location=(0, 0, {seat_height+0.03}))  
+cushion = bpy.context.active_object  
+cushion.name = "Seat_Cushion"  
+cushion.scale = ({seat_scale[0]-0.02}, {seat_scale[1]-0.02}, 0.03)  
+
+# Add cushion material  
+mat_cushion = bpy.data.materials.new(name="Cushion_Material")  
+mat_cushion.use_nodes = True  
+mat_cushion.node_tree.nodes["Principled BSDF"].inputs[0].default_value = (0.8, 0.7, 0.6, 1.0)  
+mat_cushion.node_tree.nodes["Principled BSDF"].inputs[9].default_value = 0.7  
+cushion.data.materials.append(mat_cushion)  
+
+# Add backrest cushion  
+bpy.ops.mesh.primitive_cube_add(size=2, location=(0, -0.33, {backrest_height}))  
+back_cushion = bpy.context.active_object  
+back_cushion.name = "Backrest_Cushion"  
+back_cushion.scale = (0.35, 0.03, 0.3)  
+back_cushion.data.materials.append(mat_cushion)  
+'''  
+    
+    # 添加额外的支撑结构  
+    if 'reinforced' in desc_lower or is_industrial:  
+        code += f'''  
+# Add reinforcement bars  
+cross_brace_positions = [  
+    (0, -0.15, {leg_height*0.5}),   
+    (0, 0.15, {leg_height*0.5})  
+]  
+for idx, pos in enumerate(cross_brace_positions):  
+    bpy.ops.mesh.primitive_cylinder_add(radius=0.015, depth=0.7, location=pos)  
+    brace = bpy.context.active_object  
+    brace.name = f"Cross_Brace_{{idx+1}}"  
+    brace.rotation_euler = (0, 0, 1.5708)  
+
+# Side braces  
+side_brace_positions = [  
+    (-0.15, 0, {leg_height*0.5}),   
+    (0.15, 0, {leg_height*0.5})  
+]  
+for idx, pos in enumerate(side_brace_positions):  
+    bpy.ops.mesh.primitive_cylinder_add(radius=0.015, depth=0.6, location=pos)  
+    brace = bpy.context.active_object  
+    brace.name = f"Side_Brace_{{idx+1}}"  
+    brace.rotation_euler = (1.5708, 0, 0)  
+'''  
+    
+    # 添加透明材质（针对亚克力椅子）  
+    if is_plastic or 'transparent' in desc_lower or 'acrylic' in desc_lower:  
+        code += '''  
+# Add transparent acrylic material  
+mat_acrylic = bpy.data.materials.new(name="Acrylic_Material")  
+mat_acrylic.use_nodes = True  
+mat_acrylic.node_tree.nodes["Principled BSDF"].inputs[0].default_value = (0.9, 0.9, 1.0, 1.0)  
+mat_acrylic.node_tree.nodes["Principled BSDF"].inputs[15].default_value = 1.0  
+mat_acrylic.node_tree.nodes["Principled BSDF"].inputs[9].default_value = 0.0  
+mat_acrylic.node_tree.nodes["Principled BSDF"].inputs[21].default_value = 0.95  
+
+# Apply to seat and backrest  
+seat.data.materials.append(mat_acrylic)  
+for obj in bpy.context.scene.objects:  
+    if obj.name == "Backrest":  
+        obj.data.materials.append(mat_acrylic)  
+'''  
+    
+    # 添加木纹材质（针对木质椅子）  
+    if is_scandinavian or 'wooden' in desc_lower:  
+        code += '''  
+# Add wood material  
+mat_wood = bpy.data.materials.new(name="Wood_Material")  
+mat_wood.use_nodes = True  
+mat_wood.node_tree.nodes["Principled BSDF"].inputs[0].default_value = (0.4, 0.25, 0.1, 1.0)  
+mat_wood.node_tree.nodes["Principled BSDF"].inputs[9].default_value = 0.8  
+
+# Apply wood material to relevant parts  
+for obj in bpy.context.scene.objects:  
+    if obj.type == 'MESH' and 'Leg' in obj.name:  
+        obj.data.materials.append(mat_wood)  
+    elif obj.name in ['Seat', 'Backrest'] and not (is_fabric or is_leather):  
+        obj.data.materials.append(mat_wood)  
+'''  
+    
+    # 添加金属材质（针对工业风格）  
+    if is_industrial:  
+        code += '''  
+# Add metal material  
+mat_metal = bpy.data.materials.new(name="Metal_Material")  
+mat_metal.use_nodes = True  
+mat_metal.node_tree.nodes["Principled BSDF"].inputs[0].default_value = (0.7, 0.7, 0.8, 1.0)  
+mat_metal.node_tree.nodes["Principled BSDF"].inputs[6].default_value = 1.0  
+mat_metal.node_tree.nodes["Principled BSDF"].inputs[9].default_value = 0.2  
+
+# Apply to frame elements  
+for obj in bpy.context.scene.objects:  
+    if obj.type == 'MESH' and any(name in obj.name for name in ['Leg', 'Brace', 'Support', 'Base']):  
+        obj.data.materials.append(mat_metal)  
+'''  
+    
+    # 添加特殊功能元素  
+    if 'massage' in desc_lower:  
+        code += '''  
+# Add massage chair elements  
+bpy.ops.mesh.primitive_sphere_add(radius=0.03, location=(0, -0.32, 0.8))  
+massage_node = bpy.context.active_object  
+massage_node.name = "Massage_Node"  
+'''  
+    
+    if 'cup holder' in desc_lower or 'cupholder' in desc_lower:  
+        code += f'''  
+# Add cup holder  
+bpy.ops.mesh.primitive_cylinder_add(radius=0.04, depth=0.05, location=(0.5, 0, {seat_height+0.15}))  
+cup_holder = bpy.context.active_object  
+cup_holder.name = "Cup_Holder"  
+'''  
+    
+    # 最终调整和优化  
+    code += '''  
+# Final adjustments and positioning  
+bpy.ops.object.select_all(action='SELECT')  
+bpy.ops.object.origin_set(type='ORIGIN_GEOMETRY', center='BOUNDS')  
+
+# Set smooth shading for organic shapes  
+for obj in bpy.context.scene.objects:  
+    if obj.type == 'MESH':  
+        bpy.context.view_layer.objects.active = obj  
+        bpy.ops.object.shade_smooth()  
+
+# Create a collection for organization  
+collection = bpy.data.collections.new("Chair_Components")  
+bpy.context.scene.collection.children.link(collection)  
+
+# Move all objects to the collection  
+for obj in bpy.context.scene.objects:  
+    if obj.type == 'MESH':  
+        bpy.context.scene.collection.objects.unlink(obj)  
+        collection.objects.link(obj)  
+
+print("Chair generation completed successfully!")  
+'''  
+    
+    return code
+
+
+
+
+
+
 
 def main():  
     """主训练函数 - LoRA版本，修复设备问题"""  
