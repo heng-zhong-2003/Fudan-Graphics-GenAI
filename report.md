@@ -135,6 +135,11 @@ CUDA错误 - 概率张量包含inf/nan值；
 - 检查修复后的参数是否真的正常：check_all_params.py
 ![alt text](image-7.png)
 9. 在微调模型正确基础上，加大微调参数
+- 一个脚本来正确加载50个样本: train_with_real_data.py
+10. 但是是用tags生成Bleder代码，不好
+- 重写为自然语言描述：train_natural_language.py
+11. 还是LoRA
+- train_lora_blender.py, 且解决gpu分配问题
 
 
 总结，两份代码：
@@ -150,6 +155,23 @@ python test_fixed_models.py
 
 ```
 
+新微调：
+```
+rm -rf ./output  
+
+# 运行修复版本  
+python train_lora_blender.py  
+
+python fix_json_save.py  
+
+
+```
+结果：
+![alt text](image-9.png)
+![alt text](image-10.png)
+
+进行评价：model_comparison_evaluation.py
+改为 分离式评估 ：separate_model_evaluation.py  避免内存问题，不好同时启两个模型
 
 
 
