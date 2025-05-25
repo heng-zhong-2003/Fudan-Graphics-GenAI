@@ -172,3 +172,24 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# 模型文件 - 太大不适合Git版本控制  
+*.safetensors  
+*.pt  
+*.pth  
+*.ckpt  
+*.model  
+*.bin  
+
+# 输出目录  
+output/  
+models/  
+checkpoints/  
+
+# 临时文件  
+*.tmp  
+*.log  
+tmp_*  
+
+# Git临时文件  
+.git/objects/pack/tmp_pack_*  
