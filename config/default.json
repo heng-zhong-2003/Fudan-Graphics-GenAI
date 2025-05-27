@@ -32,7 +32,7 @@
         "render_output": "./output/evaluation_renders"  
     },  
     "evaluation_config": {  
-        "openai_api_key": "need_add",  
+        "openai_api_key": "api_key",  
         "render_resolution": [512, 512],  
         "key_prompts_only": true  
     }  

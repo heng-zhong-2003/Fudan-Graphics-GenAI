@@ -21,8 +21,8 @@ class SeparateModelEvaluator:
         self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")  
         self.test_prompts = [  
             # 基础风格类型  
-            "Design a chair: modern minimalist office chair with wheels",  
-            "Design a chair: comfortable recliner with armrests and cushions",   
+            # "Design a chair: modern minimalist office chair with wheels",  
+            # "Design a chair: comfortable recliner with armrests and cushions",   
             # "Design a chair: dining chair with tall backrest and no armrests",  
             # "Design a chair: ergonomic gaming chair with adjustable height",  
             # "Design a chair: vintage wooden chair with carved details",  
@@ -49,6 +49,11 @@ class SeparateModelEvaluator:
             # # 特殊功能  
             # "Design a chair: height adjustable desk chair with wheels and cup holder",  
             # "Design a chair: ergonomic chair with lumbar support, armrests and mesh backrest"  
+            "Design a chair: modern minimalist office chair with wheels",  
+            "Design a chair: ergonomic gaming chair with adjustable height",   
+            "Design a chair: vintage wooden chair with carved details",  
+            "Design a chair: industrial metal chair with reinforced frame",  
+            "Design a chair: scandinavian wooden chair with minimalist design"  
         ]  
         
     def clear_gpu_memory(self):  

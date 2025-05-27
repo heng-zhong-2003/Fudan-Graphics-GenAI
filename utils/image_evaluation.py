@@ -3,9 +3,9 @@
 使用OpenAI GPT-4V对渲染图像进行质量评估  
 """  
 
-import base64  
-import requests  
 import os  
+import requests  
+import base64  
 import json  
 from typing import Dict, Any  
 
@@ -20,6 +20,15 @@ class ImageQualityEvaluator:
         self.api_key = api_key or os.getenv('OPENAI_API_KEY')  
         if not self.api_key:  
             print("⚠️ 未找到OpenAI API密钥，图像评估功能将被禁用")  
+            print("💡 请设置环境变量 OPENAI_API_KEY 或直接传入api_key参数")  
+        
+        # 代理设置  
+        self.proxies = None  
+        if os.getenv('http_proxy') or os.getenv('https_proxy'):  
+            self.proxies = {  
+                'http': os.getenv('http_proxy'),  
+                'https': os.getenv('https_proxy')  
+            }  
     
     def encode_image_to_base64(self, image_path: str) -> str:  
         """将图像文件编码为base64字符串"""  
@@ -61,7 +70,7 @@ class ImageQualityEvaluator:
 {{  
     "total_score": 总分数字(0-100),  
     "structure_score": 结构分数字(0-25),  
-    "style_score": 风格分数字(0-25),   
+    "style_score": 风格分数字(0-25),  
     "function_score": 功能分数字(0-25),  
     "aesthetic_score": 美观分数字(0-25),  
     "comments": "详细评价文字"  
@@ -76,7 +85,7 @@ class ImageQualityEvaluator:
                     "Content-Type": "application/json"  
                 },  
                 json={  
-                    "model": "gpt-4-vision-preview",  
+                    "model": "gpt-4o",  # 更新为当前可用的视觉模型  
                     "messages": [  
                         {  
                             "role": "user",  
@@ -92,7 +101,9 @@ class ImageQualityEvaluator:
                         }  
                     ],  
                     "max_tokens": 500  
-                }  
+                },  
+                proxies=self.proxies,  # 添加代理支持  
+                timeout=30  # 添加超时设置  
             )  
             
             if response.status_code == 200:  
@@ -119,11 +130,12 @@ class ImageQualityEvaluator:
                     }  
             else:  
                 print(f"❌ OpenAI API错误: {response.status_code}")  
+                print(f"响应内容: {response.text}")  
                 return {"total_score": 0, "comments": f"API调用失败: {response.status_code}"}  
                 
         except Exception as e:  
             print(f"❌ 图像评估错误: {e}")  
-            return {"total_score": 0, "comments": f"评估失败: {e}"}  
+            return {"total_score": 0, "comments": f"评估失败: {e}"}
     
     def batch_evaluate(self, image_prompt_pairs: list) -> Dict[str, Any]:  
         """  
