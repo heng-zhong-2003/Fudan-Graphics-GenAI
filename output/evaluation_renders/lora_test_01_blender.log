@@ -1,0 +1,13 @@
+=== Blender执行日志: lora_test_01 ===
+返回码: 0
+标准输出:
+Blender 4.4.3 (hash 802179c51ccc built 2025-04-29 15:12:13)
+
+Blender quit
+
+错误输出:
+  File "/tmp/tmp5m6gygq6.py", line 42
+    bpy.ops.mesh.primitive_cylinder_add(radius=0.1, depth=  
+                                       ^
+SyntaxError: '(' was never closed
+

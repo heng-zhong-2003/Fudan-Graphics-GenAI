@@ -1,0 +1,20 @@
+=== Blender执行日志: lora_test_04 ===
+返回码: 0
+标准输出:
+=== 开始执行Blender脚本: lora_test_04 ===
+清除默认场景...
+执行用户脚本...
+错误: name 'f' is not defined
+尝试创建备用场景...
+备用场景创建也失败: name '_create_fallback_chair' is not defined
+Blender 4.4.3 (hash 802179c51ccc built 2025-04-29 15:12:13)
+
+Blender quit
+
+错误输出:
+Traceback (most recent call last):
+  File "/tmp/tmpqfxfnlrt.py", line 41, in <module>
+    leg.name = f
+             ^
+NameError: name 'f' is not defined
+

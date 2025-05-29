@@ -1,0 +1,66 @@
+=== Blender执行日志: orig_5 ===
+返回码: 0
+标准输出:
+Blender 4.4.3 (hash 802179c51ccc built 2025-04-29 15:12:13)
+Fra:1 Mem:10.50M (Peak 10.50M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Leg 1
+Fra:1 Mem:10.51M (Peak 10.51M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Backrest
+Fra:1 Mem:10.53M (Peak 10.53M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:10.21M (Peak 10.53M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:10.22M (Peak 10.53M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:10.22M (Peak 10.53M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:10.22M (Peak 10.53M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:10.30M (Peak 10.53M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:10.30M (Peak 10.53M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:10.30M (Peak 10.53M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:10.30M (Peak 10.53M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:10.30M (Peak 10.53M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:10.30M (Peak 10.53M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:10.30M (Peak 10.53M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:10.30M (Peak 10.53M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:10.30M (Peak 10.53M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:10.30M (Peak 10.53M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:10.31M (Peak 10.53M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:10.31M (Peak 10.53M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:10.31M (Peak 10.53M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:10.31M (Peak 10.53M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:10.31M (Peak 10.53M) | Time:00:00.00 | Mem:0.02M, Peak:0.02M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:1 Mem:10.31M (Peak 10.53M) | Time:00:00.01 | Mem:0.04M, Peak:0.05M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:10.31M (Peak 10.53M) | Time:00:00.01 | Mem:0.04M, Peak:0.05M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:10.33M (Peak 10.53M) | Time:00:00.01 | Mem:0.04M, Peak:0.05M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:10.33M (Peak 10.53M) | Time:00:00.01 | Mem:0.05M, Peak:0.05M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:10.33M (Peak 10.53M) | Time:00:00.01 | Mem:0.05M, Peak:0.05M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:10.33M (Peak 10.53M) | Time:00:00.01 | Mem:0.05M, Peak:0.05M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:10.33M (Peak 10.53M) | Time:00:00.01 | Mem:0.05M, Peak:0.05M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:10.33M (Peak 10.53M) | Time:00:00.01 | Mem:0.05M, Peak:0.05M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:10.33M (Peak 10.53M) | Time:00:00.01 | Mem:0.14M, Peak:0.14M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:10.33M (Peak 10.53M) | Time:00:00.01 | Mem:0.14M, Peak:0.14M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:10.33M (Peak 10.53M) | Time:00:00.01 | Mem:0.14M, Peak:0.14M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:10.33M (Peak 10.53M) | Time:00:00.01 | Mem:0.14M, Peak:0.14M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:10.33M (Peak 10.53M) | Time:00:00.01 | Mem:0.05M, Peak:0.14M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:10.33M (Peak 10.53M) | Time:00:00.01 | Mem:0.14M, Peak:0.14M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:10.33M (Peak 10.53M) | Time:00:00.01 | Mem:0.14M, Peak:0.14M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:10.33M (Peak 10.53M) | Time:00:00.01 | Mem:0.14M, Peak:0.14M | Scene, ViewLayer | Loading denoising kernels (may take a few minutes the first time)
+Fra:1 Mem:10.33M (Peak 10.53M) | Time:00:00.01 | Mem:0.14M, Peak:0.14M | Scene, ViewLayer | Sample 0/64
+Fra:1 Mem:29.97M (Peak 29.97M) | Time:00:00.02 | Remaining:00:00.66 | Mem:19.14M, Peak:19.14M | Scene, ViewLayer | Sample 1/64
+Fra:1 Mem:37.97M (Peak 49.97M) | Time:00:00.42 | Mem:19.14M, Peak:19.14M | Scene, ViewLayer | Sample 64/64
+Fra:1 Mem:37.97M (Peak 49.97M) | Time:00:00.42 | Mem:19.14M, Peak:19.14M | Scene, ViewLayer | Finished
+Saved: 'output/evaluation_renders/orig_5.png'
+Time: 00:00.55 (Saving: 00:00.13)
+
+=== 开始执行Blender脚本: orig_5 ===
+清除默认场景...
+执行用户脚本...
+设置渲染参数...
+添加光照...
+设置相机...
+找到 6 个网格对象
+场景中心: [0.0, 0.0, -0.22499997913837433]
+添加材质...
+开始渲染...
+图像已渲染: ./output/evaluation_renders/orig_5.png (205554 bytes)
+=== Blender脚本执行完成 ===
+
+Blender quit
+
+错误输出:
+
